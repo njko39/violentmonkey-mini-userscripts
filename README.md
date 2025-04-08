@@ -1,4 +1,4 @@
-Мелкие скрипты для разных сайтов
+Mini scripts for various websites
 
 ## [ChatGPT-chat-folder.user.js](https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/ChatGPT-chat-folder.user.js)
 Добавляет папки для чатов на ChatGPT
