@@ -9,7 +9,7 @@
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/)
 // @homepageURL https://github.com/njko39/ChatGPT-folders-script/
-// @updateURL   /
+// @updateURL   https://github.com/njko39/ChatGPT-folders-script/raw/refs/heads/main/ChatGPT-chat-folder.user.js
 // @license     MIT
 // ==/UserScript==
 
