@@ -8,8 +8,8 @@
 // @grant        none
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/)
-// @homepageURL https://github.com/njko39/ChatGPT-folders-script/
-// @updateURL   https://github.com/njko39/ChatGPT-folders-script/raw/refs/heads/main/ChatGPT-chat-folder.user.js
+// @homepageURL https://github.com/njko39/violentmonkey-mini-userscripts/
+// @updateURL   https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/ChatGPT-chat-folder.user.js
 // @license     MIT
 // ==/UserScript==
 
