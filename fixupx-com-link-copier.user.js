@@ -1,12 +1,17 @@
 // ==UserScript==
-// @name         FixupX Link Copier for X.com
+// @name         x.com — fixupx.com share links
 // @namespace    https://x.com/
 // @version      1.0
-// @description  Заменяет x.com на fixupx.com при копировании ссылки в Twitter/X
+// @description  Make share button on x.com copy fixupx.com link
 // @author       Ты
 // @match        https://x.com/*
 // @grant        GM_setClipboard
 // @run-at       document-start
+// @author      njko39
+// @copyright   2025, njko39 (https://github.com/njko39/)
+// @homepageURL https://github.com/njko39/violentmonkey-mini-userscripts/
+// @updateURL   https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/fixupx-com-link-copier.user.js
+// @license     MIT
 // ==/UserScript==
 
 (function () {
