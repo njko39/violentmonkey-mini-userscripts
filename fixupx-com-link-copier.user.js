@@ -3,7 +3,6 @@
 // @namespace    https://x.com/
 // @version      1.0
 // @description  Make share button on x.com copy fixupx.com link
-// @author       Ты
 // @match        https://x.com/*
 // @grant        GM_setClipboard
 // @run-at       document-start
