@@ -89,21 +89,21 @@
     });
   };
 
-  const observer = new MutationObserver(() => {
-    const menuItems = document.querySelectorAll('[role="menuitem"]');
-    for (const item of menuItems) {
-      const text = item.innerText?.toLowerCase().trim();
-      if (
-        text === 'copy link to post' ||
-        text === 'копировать ссылку' ||
-        text === 'копировать ссылку на пост' ||
-        text === 'copy link' ||
-        text === 'share'
-      ) {
-        handleMenuItem(item);
-      }
+const observer = new MutationObserver(() => {
+  const menuItems = Array.from(document.querySelectorAll('[role="menuitem"], div[role="button"], div[tabindex="0"]'));
+  for (const item of menuItems) {
+    const text = item.innerText?.toLowerCase().trim();
+    if (
+      text.includes('copy link') ||
+      text.includes('копировать ссылку') ||
+      text.includes('share') ||
+      text.includes('ссылка')
+    ) {
+      handleMenuItem(item);
     }
-  });
+  }
+});
+
 
   observer.observe(document.body, { childList: true, subtree: true });
   console.log('✅ FixupX Link Copier (universal) initialized');
