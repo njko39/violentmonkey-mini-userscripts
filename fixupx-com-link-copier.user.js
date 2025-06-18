@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         x.com — fixupx.com share links
+// @name         x.com links into fixup.x links
 // @namespace    https://x.com/
 // @version      1.0
 // @description  Make share button on x.com copy fixupx.com link
@@ -16,95 +16,90 @@
 (function () {
   'use strict';
 
-  const copyToClipboardFallback = (text) => {
-    if (typeof GM_setClipboard === 'function') {
-      GM_setClipboard(text, 'text');
-      console.log('✅ [GM_setClipboard] Скопировано:', text);
-      return;
-    }
+  const fixTweetUrl = (text) => {
+    return text.replace(/https:\/\/(?:x|twitter)\.com\/([^\/]+\/status\/\d+)/g, 'https://fixupx.com/$1');
+  };
 
-    const textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = 'fixed';
-    textarea.style.left = '-9999px';
-    textarea.style.top = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.focus();
-    textarea.select();
+  const fixSingleLink = (a) => {
+    if (!a.href || !a.href.includes('/status/')) return;
+    const fixed = fixTweetUrl(a.href);
+    if (fixed !== a.href) {
+      a.href = fixed;
+      a.dataset.fixupHrefReplaced = 'true';
+    }
+  };
+
+  const fixAllLinksInDOM = () => {
+    const links = document.querySelectorAll('a[href*="/status/"]:not([data-fixupHrefReplaced])');
+    for (const a of links) {
+      fixSingleLink(a);
+    }
+  };
+
+  // 1️⃣ Подмена при копировании выделенного текста
+  document.addEventListener('copy', (e) => {
     try {
-      const success = document.execCommand('copy');
-      if (success) {
-        console.log('✅ [execCommand] Скопировано:', text);
-      } else {
-        console.error('❌ Не удалось скопировать текст через execCommand.');
+      const selection = window.getSelection().toString();
+      const fixed = fixTweetUrl(selection);
+      if (fixed !== selection) {
+        e.preventDefault();
+        e.clipboardData.setData('text/plain', fixed);
+        console.log('🔗 [copy] Заменена ссылка:', fixed);
       }
     } catch (err) {
-      console.error('❌ Ошибка копирования:', err);
+      console.warn('⚠️ Ошибка в обработчике copy:', err);
     }
-    document.body.removeChild(textarea);
-  };
+  });
 
-  const findClosestTweetUrl = (element) => {
-    let current = element;
-    while (current && current !== document.body) {
-      const links = current.querySelectorAll('a[href*="/status/"]');
-      for (const link of links) {
-        if (link.href.includes('/status/')) {
-          return link.href;
-        }
-      }
-      current = current.parentElement;
-    }
-    return null;
-  };
-
-  const handleMenuItem = (item) => {
+  // 2️⃣ Обработка кнопок "копировать ссылку"/"поделиться"
+  const setupMenuButtonHandler = (item) => {
     if (item.dataset.fixupHandled) return;
     item.dataset.fixupHandled = 'true';
-
-    item.addEventListener('click', async () => {
+    item.addEventListener('click', () => {
       setTimeout(async () => {
-        // 1. Пробуем прочитать из clipboard
         try {
-          const text = await navigator.clipboard.readText();
-          if (text && (text.includes('x.com') || text.includes('twitter.com'))) {
-            const fixed = text.replace(/^https:\/\/(x|twitter)\.com\//, 'https://fixupx.com/');
-            copyToClipboardFallback(fixed);
-            return;
+          const clip = await navigator.clipboard.readText();
+          if (clip.includes('/status/')) {
+            const fixed = fixTweetUrl(clip);
+            if (fixed !== clip) {
+              if (typeof GM_setClipboard === 'function') {
+                GM_setClipboard(fixed);
+              } else {
+                await navigator.clipboard.writeText(fixed);
+              }
+              console.log('📋 [button] Заменена ссылка:', fixed);
+            }
           }
         } catch (e) {
           console.warn('⚠️ Не удалось прочитать clipboard:', e);
         }
-
-        // 2. Ищем ссылку в DOM
-        const url = findClosestTweetUrl(item);
-        if (url) {
-          const fixed = url.replace(/^https:\/\/(x|twitter)\.com\//, 'https://fixupx.com/');
-          copyToClipboardFallback(fixed);
-          return;
-        }
-
-        console.error('❌ Не удалось найти ссылку для замены.');
       }, 300);
     });
   };
 
-const observer = new MutationObserver(() => {
-  const menuItems = Array.from(document.querySelectorAll('[role="menuitem"], div[role="button"], div[tabindex="0"]'));
-  for (const item of menuItems) {
-    const text = item.innerText?.toLowerCase().trim();
-    if (
-      text.includes('copy link') ||
-      text.includes('копировать ссылку') ||
-      text.includes('share') ||
-      text.includes('ссылка')
-    ) {
-      handleMenuItem(item);
+  const observer = new MutationObserver(() => {
+    fixAllLinksInDOM();
+
+    const items = document.querySelectorAll('[role="menuitem"], [role="button"], a, div');
+    for (const item of items) {
+      const text = item.innerText?.toLowerCase() || '';
+      if (
+        text.includes('копировать') ||
+        text.includes('ссылка') ||
+        text.includes('share') ||
+        text.includes('copy')
+      ) {
+        setupMenuButtonHandler(item);
+      }
     }
-  }
-});
+  });
 
-
+  // 3️⃣ Стартуем наблюдение за DOM
   observer.observe(document.body, { childList: true, subtree: true });
-  console.log('✅ FixupX Link Copier (universal) initialized');
+
+  // 4️⃣ Инициализация начальной подмены в href
+  window.addEventListener('load', () => {
+    fixAllLinksInDOM();
+    console.log('✅ FixupX инициализирован (все уровни защиты включены)');
+  });
 })();
