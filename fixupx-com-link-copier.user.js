@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         x.com links into fixup.x links
 // @namespace    https://x.com/
-// @version      1.0
+// @version      1.1
 // @description  Make share button on x.com copy fixupx.com link
 // @match        https://x.com/*
 // @grant        GM_setClipboard
