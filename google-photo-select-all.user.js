@@ -4,7 +4,7 @@
 // @match        https://photos.google.com/*
 // @run-at       document-idle
 // @grant        none
-// @updateURL   https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/google-photo-select-all.user.js
+// @updateURL    https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/google-photo-select-all.user.js
 // ==/UserScript==
 
 (() => {
