@@ -8,3 +8,7 @@ Adds "Select All" button to google photo selection
 
 ## [google-photo-delete-hotkey.user.js](https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/google-photo-delete-hotkey.user.js)
 Make "Delete" key delete file like default Shift + #
+
+# Credits
+
+- ANI - Wine Glass - Hard by ani_music -- https://freesound.org/s/198401/ -- License: Creative Commons 0
