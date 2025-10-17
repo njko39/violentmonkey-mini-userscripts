@@ -12,6 +12,9 @@ Make "Delete" key delete file like default Shift + #
 ## [trello-completion-sfx.user.js](https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/trello-completion-sfx.user.js)
 Plays ding sound when completion task on trello
 
+## [trello-hide-topbar.user.js](https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/trello-hide-topbar.user.js)
+Hides topbar
+
 # Credits
 
 - ANI - Wine Glass - Hard by ani_music -- https://freesound.org/s/198401/ -- License: Creative Commons 0
