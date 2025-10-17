@@ -6,7 +6,7 @@
 // @match        https://trello.com/*
 // @run-at       document-start
 // @grant        none
-// @updateURL https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/trello-hide-topbar.js
+// @updateURL https://github.com/njko39/violentmonkey-mini-userscripts/raw/refs/heads/main/trello-hide-topbar.user.js
 // ==/UserScript==
 
 (function () {
